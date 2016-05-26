@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic; 
 
-  public class BinaryTree<T> 
-  {
+  public class BinaryTree<T> {
 
     public BinaryTree<T> left;
     public BinaryTree<T> right;
@@ -10,8 +9,7 @@ using System.Collections.Generic;
     public readonly T value;
     Func<T, T, int> comparer; 
 
-    public BinaryTree(T value, Func<T, T, int> comparer)
-    {
+    public BinaryTree(T value, Func<T, T, int> comparer) {
       this.value = value;
       this.comparer = comparer;
       left = null;
@@ -20,8 +18,7 @@ using System.Collections.Generic;
 
     public BinaryTree(T value) : this(value, (x,y) => Comparer<T>.Default.Compare(x,y)) { }
 
-    public void Insert(T value)
-    {
+    public void Insert(T value) {
       if (comparer(value, this.value) < 0)
       {
         if (left == null) left = new BinaryTree<T>(value, comparer);

@@ -8,8 +8,7 @@ A simple generic unbalanced binary tree.
 using System;
 using System.Collections.Generic; 
 
-  public class BinaryTree<T> 
-  {
+  public class BinaryTree<T> {
 
     public BinaryTree<T> left;
     public BinaryTree<T> right;
@@ -17,8 +16,7 @@ using System.Collections.Generic;
     public readonly T value;
     Func<T, T, int> comparer; 
 
-    public BinaryTree(T value, Func<T, T, int> comparer)
-    {
+    public BinaryTree(T value, Func<T, T, int> comparer) {
       this.value = value;
       this.comparer = comparer;
       left = null;
@@ -27,8 +25,7 @@ using System.Collections.Generic;
 
     public BinaryTree(T value) : this(value, (x,y) => Comparer<T>.Default.Compare(x,y)) { }
 
-    public void Insert(T value)
-    {
+    public void Insert(T value) {
       if (comparer(value, this.value) < 0)
       {
         if (left == null) left = new BinaryTree<T>(value, comparer);
@@ -139,13 +136,10 @@ public static class BinaryTreeExtensions {
   public static void PrintDot<T>(this BinaryTree<T> tree) {
     Console.WriteLine("digraph G {");
     Console.WriteLine("  node[shape=rectangle];");
-
     int empties = 0;
     PrintSubTree(tree, ref empties); 
-
     Console.WriteLine("}"); 
   }
-
 }
 #+END_SRC
 
@@ -153,7 +147,6 @@ Call extension method ~PrintDot~ and feed the results into [[http://www.graphviz
 
 #+BEGIN_SRC csharp :tangle demo/treetest2.cs 
 class TreeTest {
-
   public static void Main() {
     BinaryTree<int> root = new BinaryTree<int>(5); 
     root.Insert(3,7,1,4,6,2);
@@ -198,8 +191,7 @@ using System;
 
 class TreeTest {
 
-  public static void Main()
-  {
+  public static void Main() {
     BinaryTree<string> lannisters = new BinaryTree<string>("Tywin");
     lannisters.Insert("Cersei");
     lannisters.Insert("Tyrion");

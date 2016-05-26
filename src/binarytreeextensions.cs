@@ -34,11 +34,8 @@ public static class BinaryTreeExtensions {
   public static void PrintDot<T>(this BinaryTree<T> tree) {
     Console.WriteLine("digraph G {");
     Console.WriteLine("  node[shape=rectangle];");
-
     int empties = 0;
     PrintSubTree(tree, ref empties); 
-
     Console.WriteLine("}"); 
   }
-
 }
