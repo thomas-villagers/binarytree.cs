@@ -239,7 +239,6 @@ digraph G {
 [[file:images/tree2.png]]
 
 
-
 ** Application: Huffman-Encoding 
    CLOSED: [2016-05-26 Do 17:04]
 
