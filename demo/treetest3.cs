@@ -3,7 +3,7 @@ using System;
 class TreeTest {
 
   public static void Main() {
-    BinaryTree<string> lannisters = new BinaryTree<string>("Tywin");
+    var lannisters = new BinaryTree<string>("Tywin");
     lannisters.Insert("Cersei");
     lannisters.Insert("Tyrion");
     lannisters.Insert("Joffrey");

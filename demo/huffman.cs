@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic; 
 using System.Linq; 
 
+using StringIntPair = System.Collections.Generic.KeyValuePair<string,int>;
+
 class PriorityQueue<T> { // A poor man's priority queue... 
 
   List<T> list;
-  Func<T, T, int> comparer; 
+  readonly Func<T, T, int> comparer; 
 
   public PriorityQueue(Func<T, T, int> comparer) {
     this.comparer = comparer;
@@ -51,19 +53,19 @@ class StringHistogram {
 class Huffman {
 
   public static void Main() {
-  //  StringHistogram hist = new StringHistogram("Hello World!")
-   StringHistogram hist = new StringHistogram("a fast runner need never be afraid of the dark"); 
+    //  StringHistogram hist = new StringHistogram("Hello World!")
+    StringHistogram hist = new StringHistogram("a fast runner need never be afraid of the dark"); 
 
-   Func<KeyValuePair<string,int>, KeyValuePair<string,int>, int> comparer = (x,y) => x.Value - y.Value; 
-   PriorityQueue<BinaryTree<KeyValuePair<string,int>>> PQ = new PriorityQueue<BinaryTree<KeyValuePair<string,int>>>((x,y) => comparer(x.value, y.value));
-   foreach(var element in hist.dict) {
-      PQ.Enqueue(new BinaryTree<KeyValuePair<string,int>>(new KeyValuePair<string, int>(((char)element.Key).ToString(),element.Value) ,comparer));
+    Func<StringIntPair, StringIntPair, int> comparer = (x,y) => x.Value - y.Value; 
+    var PQ = new PriorityQueue<BinaryTree<StringIntPair>>((x,y) => comparer(x.value, y.value));
+    foreach(var element in hist.dict) {
+      PQ.Enqueue(new BinaryTree<StringIntPair>(new StringIntPair(((char)element.Key).ToString(),element.Value), comparer));
     }
-
+  
     while (PQ.Count() > 1) {
       var T1 = PQ.Dequeue();
       var T2 = PQ.Dequeue();
-      var newRoot = new BinaryTree<KeyValuePair<string, int>>(new KeyValuePair<string, int>(T1.value.Key + T2.value.Key, T1.value.Value+T2.value.Value) , comparer);
+      var newRoot = new BinaryTree<StringIntPair>(new StringIntPair(T1.value.Key + T2.value.Key, T1.value.Value+T2.value.Value), comparer);
       newRoot.left = T1;
       newRoot.right= T2;
       PQ.Enqueue(newRoot);

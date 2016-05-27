@@ -22,8 +22,7 @@ A simple generic unbalanced binary tree.
     using System;
     using System.Collections.Generic; 
     
-      public class BinaryTree<T> 
-      {
+      public class BinaryTree<T> {
     
         public BinaryTree<T> left;
         public BinaryTree<T> right;
@@ -31,8 +30,7 @@ A simple generic unbalanced binary tree.
         public readonly T value;
         Func<T, T, int> comparer; 
     
-        public BinaryTree(T value, Func<T, T, int> comparer)
-        {
+        public BinaryTree(T value, Func<T, T, int> comparer) {
           this.value = value;
           this.comparer = comparer;
           left = null;
@@ -41,8 +39,7 @@ A simple generic unbalanced binary tree.
     
         public BinaryTree(T value) : this(value, (x,y) => Comparer<T>.Default.Compare(x,y)) { }
     
-        public void Insert(T value)
-        {
+        public void Insert(T value) {
           if (comparer(value, this.value) < 0)
           {
             if (left == null) left = new BinaryTree<T>(value, comparer);
@@ -77,7 +74,7 @@ A simple generic unbalanced binary tree.
     
       public static void Main()
       {
-        BinaryTree<int> root = new BinaryTree<int>(5); 
+        var root = new BinaryTree<int>(5); 
         root.Insert(3);
         root.Insert(7);
         root.Insert(1);
@@ -86,11 +83,11 @@ A simple generic unbalanced binary tree.
         root.Insert(2);  
         Console.WriteLine(root);
     
-        BinaryTree<float> floattree = new BinaryTree<float>(3.14f); 
+        var floattree = new BinaryTree<float>(3.14f); 
         floattree.Insert(0.99f, 2.34f, 3.1415f);
         Console.WriteLine(floattree);
     
-        BinaryTree<string> lannisters = new BinaryTree<string>("Tywin");
+        var lannisters = new BinaryTree<string>("Tywin");
         lannisters.Insert("Cersei","Tyrion","Joffrey");
         lannisters.Insert("Tommen");
         lannisters.Insert("Myrcella");
@@ -144,21 +141,17 @@ A simple generic unbalanced binary tree.
       public static void PrintDot<T>(this BinaryTree<T> tree) {
         Console.WriteLine("digraph G {");
         Console.WriteLine("  node[shape=rectangle];");
-    
         int empties = 0;
         PrintSubTree(tree, ref empties); 
-    
         Console.WriteLine("}"); 
       }
-    
     }
 
 Call extension method `PrintDot` and feed the results into [Graphviz](http://www.graphviz.org/): 
 
     class TreeTest {
-    
       public static void Main() {
-        BinaryTree<int> root = new BinaryTree<int>(5); 
+        var root = new BinaryTree<int>(5); 
         root.Insert(3,7,1,4,6,2);
         root.PrintDot(); 
       }
@@ -175,9 +168,8 @@ Another Example:
     
     class TreeTest {
     
-      public static void Main()
-      {
-        BinaryTree<string> lannisters = new BinaryTree<string>("Tywin");
+      public static void Main() {
+        var lannisters = new BinaryTree<string>("Tywin");
         lannisters.Insert("Cersei");
         lannisters.Insert("Tyrion");
         lannisters.Insert("Joffrey");
@@ -199,10 +191,12 @@ Another Example:
     using System.Collections.Generic; 
     using System.Linq; 
     
+    using StringIntPair = System.Collections.Generic.KeyValuePair<string,int>;
+    
     class PriorityQueue<T> { // A poor man's priority queue... 
     
       List<T> list;
-      Func<T, T, int> comparer; 
+      readonly Func<T, T, int> comparer; 
     
       public PriorityQueue(Func<T, T, int> comparer) {
         this.comparer = comparer;
@@ -248,19 +242,19 @@ Another Example:
     class Huffman {
     
       public static void Main() {
-      //  StringHistogram hist = new StringHistogram("Hello World!")
-       StringHistogram hist = new StringHistogram("a fast runner need never be afraid of the dark"); 
+        //  StringHistogram hist = new StringHistogram("Hello World!")
+        StringHistogram hist = new StringHistogram("a fast runner need never be afraid of the dark"); 
     
-       Func<KeyValuePair<string,int>, KeyValuePair<string,int>, int> comparer = (x,y) => x.Value - y.Value; 
-       PriorityQueue<BinaryTree<KeyValuePair<string,int>>> PQ = new PriorityQueue<BinaryTree<KeyValuePair<string,int>>>((x,y) => comparer(x.value, y.value));
-       foreach(var element in hist.dict) {
-          PQ.Enqueue(new BinaryTree<KeyValuePair<string,int>>(new KeyValuePair<string, int>(((char)element.Key).ToString(),element.Value) ,comparer));
+        Func<StringIntPair, StringIntPair, int> comparer = (x,y) => x.Value - y.Value; 
+        var PQ = new PriorityQueue<BinaryTree<StringIntPair>>((x,y) => comparer(x.value, y.value));
+        foreach(var element in hist.dict) {
+          PQ.Enqueue(new BinaryTree<StringIntPair>(new StringIntPair(((char)element.Key).ToString(),element.Value), comparer));
         }
     
         while (PQ.Count() > 1) {
           var T1 = PQ.Dequeue();
           var T2 = PQ.Dequeue();
-          var newRoot = new BinaryTree<KeyValuePair<string, int>>(new KeyValuePair<string, int>(T1.value.Key + T2.value.Key, T1.value.Value+T2.value.Value) , comparer);
+          var newRoot = new BinaryTree<StringIntPair>(new StringIntPair(T1.value.Key + T2.value.Key, T1.value.Value+T2.value.Value), comparer);
           newRoot.left = T1;
           newRoot.right= T2;
           PQ.Enqueue(newRoot);

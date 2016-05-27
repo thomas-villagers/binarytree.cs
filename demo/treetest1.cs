@@ -4,7 +4,7 @@ class TreeTest {
 
   public static void Main()
   {
-    BinaryTree<int> root = new BinaryTree<int>(5); 
+    var root = new BinaryTree<int>(5); 
     root.Insert(3);
     root.Insert(7);
     root.Insert(1);
@@ -13,11 +13,11 @@ class TreeTest {
     root.Insert(2);  
     Console.WriteLine(root);
 
-    BinaryTree<float> floattree = new BinaryTree<float>(3.14f); 
+    var floattree = new BinaryTree<float>(3.14f); 
     floattree.Insert(0.99f, 2.34f, 3.1415f);
     Console.WriteLine(floattree);
 
-    BinaryTree<string> lannisters = new BinaryTree<string>("Tywin");
+    var lannisters = new BinaryTree<string>("Tywin");
     lannisters.Insert("Cersei","Tyrion","Joffrey");
     lannisters.Insert("Tommen");
     lannisters.Insert("Myrcella");

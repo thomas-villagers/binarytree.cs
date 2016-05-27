@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-05-26 Do 17:22 -->
+<!-- 2016-05-27 Fr 11:28 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>A generic binary tree in C#</title>
@@ -172,8 +172,7 @@ A simple generic unbalanced binary tree.
 <pre class="src src-csharp"><span style="color: #a020f0;">using</span> <span style="color: #008b8b;">System</span>;
 <span style="color: #a020f0;">using</span> <span style="color: #008b8b;">System.Collections.Generic</span>; 
 
-  <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">class</span> <span style="color: #228b22;">BinaryTree</span>&lt;T&gt; 
-  {
+  <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">class</span> <span style="color: #228b22;">BinaryTree</span>&lt;T&gt; {
 
     <span style="color: #a020f0;">public</span> <span style="color: #228b22;">BinaryTree</span>&lt;T&gt; <span style="color: #a0522d;">left</span>;
     <span style="color: #a020f0;">public</span> <span style="color: #228b22;">BinaryTree</span>&lt;T&gt; <span style="color: #a0522d;">right</span>;
@@ -181,8 +180,7 @@ A simple generic unbalanced binary tree.
     <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">readonly</span> <span style="color: #228b22;">T</span> <span style="color: #a0522d;">value</span>;
     <span style="color: #228b22;">Func</span>&lt;<span style="color: #228b22;">T</span>, <span style="color: #228b22;">T</span>, <span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">comparer</span>; 
 
-    <span style="color: #a020f0;">public</span> <span style="color: #0000ff;">BinaryTree</span>(<span style="color: #228b22;">T</span> <span style="color: #a0522d;">value</span>, <span style="color: #228b22;">Func</span>&lt;<span style="color: #228b22;">T</span>, <span style="color: #228b22;">T</span>, <span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">comparer</span>)
-    {
+    <span style="color: #a020f0;">public</span> <span style="color: #0000ff;">BinaryTree</span>(<span style="color: #228b22;">T</span> <span style="color: #a0522d;">value</span>, <span style="color: #228b22;">Func</span>&lt;<span style="color: #228b22;">T</span>, <span style="color: #228b22;">T</span>, <span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">comparer</span>) {
       <span style="color: #a020f0;">this</span>.<span style="color: #a0522d;">value</span> = value;
       <span style="color: #a020f0;">this</span>.<span style="color: #a0522d;">comparer</span> = comparer;
       left = <span style="color: #008b8b;">null</span>;
@@ -191,8 +189,7 @@ A simple generic unbalanced binary tree.
 
     <span style="color: #a020f0;">public</span> <span style="color: #0000ff;">BinaryTree</span>(<span style="color: #228b22;">T</span> <span style="color: #a0522d;">value</span>) : <span style="color: #a020f0;">this</span>(<span style="color: #228b22;">value</span>, (<span style="color: #228b22;">x</span>,<span style="color: #228b22;">y</span>) =&gt; <span style="color: #008b8b;">Comparer</span>&lt;T&gt;.<span style="color: #228b22;">Default</span>.<span style="color: #0000ff;">Compare</span>(<span style="color: #228b22;">x</span>,<span style="color: #228b22;">y</span>)) { }
 
-    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Insert</span>(<span style="color: #228b22;">T</span> <span style="color: #a0522d;">value</span>)
-    {
+    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Insert</span>(<span style="color: #228b22;">T</span> <span style="color: #a0522d;">value</span>) {
       <span style="color: #0000ff;">if</span> (comparer(<span style="color: #228b22;">value</span>, <span style="color: #a020f0;">this</span>.<span style="color: #a0522d;">value</span>) &lt; 0)
       {
         <span style="color: #0000ff;">if</span> (left == <span style="color: #008b8b;">null</span>) left = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;T&gt;(<span style="color: #228b22;">value</span>, <span style="color: #228b22;">comparer</span>);
@@ -236,7 +233,7 @@ A simple generic unbalanced binary tree.
 
   <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Main</span>()
   {
-    <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">root</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">int</span>&gt;(5); 
+    <span style="color: #228b22;">var</span> <span style="color: #a0522d;">root</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">int</span>&gt;(5); 
     <span style="color: #a0522d;">root</span>.<span style="color: #0000ff;">Insert</span>(3);
     <span style="color: #a0522d;">root</span>.<span style="color: #0000ff;">Insert</span>(7);
     <span style="color: #a0522d;">root</span>.<span style="color: #0000ff;">Insert</span>(1);
@@ -245,11 +242,11 @@ A simple generic unbalanced binary tree.
     <span style="color: #a0522d;">root</span>.<span style="color: #0000ff;">Insert</span>(2);  
     <span style="color: #228b22;">Console</span>.<span style="color: #0000ff;">WriteLine</span>(<span style="color: #228b22;">root</span>);
 
-    <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">float</span>&gt; <span style="color: #a0522d;">floattree</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">float</span>&gt;(3.14f); 
+    <span style="color: #228b22;">var</span> <span style="color: #a0522d;">floattree</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">float</span>&gt;(3.14f); 
     <span style="color: #a0522d;">floattree</span>.<span style="color: #0000ff;">Insert</span>(0.99f, 2.34f, 3.1415f);
     <span style="color: #228b22;">Console</span>.<span style="color: #0000ff;">WriteLine</span>(<span style="color: #228b22;">floattree</span>);
 
-    <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">string</span>&gt; <span style="color: #a0522d;">lannisters</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">string</span>&gt;(<span style="color: #8b2252;">"Tywin"</span>);
+    <span style="color: #228b22;">var</span> <span style="color: #a0522d;">lannisters</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">string</span>&gt;(<span style="color: #8b2252;">"Tywin"</span>);
     <span style="color: #a0522d;">lannisters</span>.<span style="color: #0000ff;">Insert</span>(<span style="color: #8b2252;">"Cersei"</span>,<span style="color: #8b2252;">"Tyrion"</span>,<span style="color: #8b2252;">"Joffrey"</span>);
     <span style="color: #a0522d;">lannisters</span>.<span style="color: #0000ff;">Insert</span>(<span style="color: #8b2252;">"Tommen"</span>);
     <span style="color: #a0522d;">lannisters</span>.<span style="color: #0000ff;">Insert</span>(<span style="color: #8b2252;">"Myrcella"</span>);
@@ -316,13 +313,10 @@ Cersei;Jamie;Joffrey;Myrcella;Tommen;Tyrion;Tywin;
   <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span> <span style="color: #228b22;">PrintDot</span>&lt;<span style="color: #228b22;">T</span>&gt;(<span style="color: #a020f0;">this</span> <span style="color: #228b22;">BinaryTree</span>&lt;T&gt; tree) {
     <span style="color: #228b22;">Console</span>.<span style="color: #0000ff;">WriteLine</span>(<span style="color: #8b2252;">"digraph G {"</span>);
     <span style="color: #228b22;">Console</span>.<span style="color: #0000ff;">WriteLine</span>(<span style="color: #8b2252;">"  node[shape=rectangle];"</span>);
-
     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">empties</span> = 0;
     <span style="color: #0000ff;">PrintSubTree</span>(<span style="color: #228b22;">tree</span>, <span style="color: #a020f0;">ref</span> <span style="color: #228b22;">empties</span>); 
-
     <span style="color: #228b22;">Console</span>.<span style="color: #0000ff;">WriteLine</span>(<span style="color: #8b2252;">"}"</span>); 
   }
-
 }
 </pre>
 </div>
@@ -334,9 +328,8 @@ Call extension method <code>PrintDot</code> and feed the results into <a href="h
 <div class="org-src-container">
 
 <pre class="src src-csharp"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">TreeTest</span> {
-
   <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Main</span>() {
-    <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">root</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">int</span>&gt;(5); 
+    <span style="color: #228b22;">var</span> <span style="color: #a0522d;">root</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">int</span>&gt;(5); 
     <span style="color: #a0522d;">root</span>.<span style="color: #0000ff;">Insert</span>(3,7,1,4,6,2);
     <span style="color: #a0522d;">root</span>.<span style="color: #0000ff;">PrintDot</span>(); 
   }
@@ -367,9 +360,8 @@ Another Example:
 
 <span style="color: #a020f0;">class</span> <span style="color: #228b22;">TreeTest</span> {
 
-  <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Main</span>()
-  {
-    <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">string</span>&gt; <span style="color: #a0522d;">lannisters</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">string</span>&gt;(<span style="color: #8b2252;">"Tywin"</span>);
+  <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Main</span>() {
+    <span style="color: #228b22;">var</span> <span style="color: #a0522d;">lannisters</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">string</span>&gt;(<span style="color: #8b2252;">"Tywin"</span>);
     <span style="color: #a0522d;">lannisters</span>.<span style="color: #0000ff;">Insert</span>(<span style="color: #8b2252;">"Cersei"</span>);
     <span style="color: #a0522d;">lannisters</span>.<span style="color: #0000ff;">Insert</span>(<span style="color: #8b2252;">"Tyrion"</span>);
     <span style="color: #a0522d;">lannisters</span>.<span style="color: #0000ff;">Insert</span>(<span style="color: #8b2252;">"Joffrey"</span>);
@@ -398,7 +390,6 @@ mono demo/treetest3.exe
 </div>
 
 
-
 <div id="outline-container-orgheadline4" class="outline-3">
 <h3 id="orgheadline4"><span class="section-number-3">2.3</span> Application: Huffman-Encoding</h3>
 <div class="outline-text-3" id="text-2-3">
@@ -408,10 +399,12 @@ mono demo/treetest3.exe
 <span style="color: #a020f0;">using</span> <span style="color: #008b8b;">System.Collections.Generic</span>; 
 <span style="color: #a020f0;">using</span> <span style="color: #008b8b;">System.Linq</span>; 
 
+<span style="color: #a020f0;">using</span> StringIntPair = <span style="color: #228b22;">System</span>.<span style="color: #228b22;">Collections</span>.<span style="color: #228b22;">Generic</span>.<span style="color: #228b22;">KeyValuePair</span>&lt;<span style="color: #228b22;">string</span>,<span style="color: #228b22;">int</span>&gt;;
+
 <span style="color: #a020f0;">class</span> <span style="color: #228b22;">PriorityQueue</span>&lt;T&gt; { <span style="color: #b22222;">// </span><span style="color: #b22222;">A poor man's priority queue... </span>
 
   <span style="color: #228b22;">List</span>&lt;T&gt; <span style="color: #a0522d;">list</span>;
-  <span style="color: #228b22;">Func</span>&lt;T, T, <span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">comparer</span>; 
+  <span style="color: #a020f0;">readonly</span> <span style="color: #228b22;">Func</span>&lt;T, T, <span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">comparer</span>; 
 
   <span style="color: #a020f0;">public</span> <span style="color: #0000ff;">PriorityQueue</span>(<span style="color: #228b22;">Func</span>&lt;T, T, <span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">comparer</span>) {
     <span style="color: #a020f0;">this</span>.<span style="color: #a0522d;">comparer</span> = comparer;
@@ -457,19 +450,19 @@ mono demo/treetest3.exe
 <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Huffman</span> {
 
   <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Main</span>() {
-  <span style="color: #b22222;">//  </span><span style="color: #b22222;">StringHistogram hist = new StringHistogram("Hello World!")</span>
-   <span style="color: #228b22;">StringHistogram</span> <span style="color: #a0522d;">hist</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">StringHistogram</span>(<span style="color: #8b2252;">"a fast runner need never be afraid of the dark"</span>); 
+    <span style="color: #b22222;">//  </span><span style="color: #b22222;">StringHistogram hist = new StringHistogram("Hello World!")</span>
+    <span style="color: #228b22;">StringHistogram</span> <span style="color: #a0522d;">hist</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">StringHistogram</span>(<span style="color: #8b2252;">"a fast runner need never be afraid of the dark"</span>); 
 
-   <span style="color: #228b22;">Func</span>&lt;<span style="color: #228b22;">KeyValuePair</span>&lt;<span style="color: #228b22;">string</span>,<span style="color: #228b22;">int</span>&gt;, <span style="color: #228b22;">KeyValuePair</span>&lt;<span style="color: #228b22;">string</span>,<span style="color: #228b22;">int</span>&gt;, <span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">comparer</span> = (<span style="color: #228b22;">x</span>,<span style="color: #228b22;">y</span>) =&gt; <span style="color: #a0522d;">x</span>.<span style="color: #a0522d;">Value</span> - <span style="color: #a0522d;">y</span>.<span style="color: #a0522d;">Value</span>; 
-   <span style="color: #228b22;">PriorityQueue</span>&lt;<span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">KeyValuePair</span>&lt;<span style="color: #228b22;">string</span>,<span style="color: #228b22;">int</span>&gt;&gt;&gt; <span style="color: #a0522d;">PQ</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">PriorityQueue</span>&lt;<span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">KeyValuePair</span>&lt;<span style="color: #228b22;">string</span>,<span style="color: #228b22;">int</span>&gt;&gt;&gt;((<span style="color: #228b22;">x</span>,<span style="color: #228b22;">y</span>) =&gt; comparer(<span style="color: #a0522d;">x</span>.<span style="color: #a0522d;">value</span>, <span style="color: #a0522d;">y</span>.<span style="color: #a0522d;">value</span>));
-   <span style="color: #0000ff;">foreach</span>(<span style="color: #228b22;">var</span> <span style="color: #a0522d;">element</span> <span style="color: #a020f0;">in</span> <span style="color: #a0522d;">hist</span>.<span style="color: #a0522d;">dict</span>) {
-      <span style="color: #228b22;">PQ</span>.<span style="color: #0000ff;">Enqueue</span>(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">KeyValuePair</span>&lt;<span style="color: #228b22;">string</span>,<span style="color: #228b22;">int</span>&gt;&gt;(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">KeyValuePair</span>&lt;<span style="color: #228b22;">string</span>, <span style="color: #228b22;">int</span>&gt;(((<span style="color: #228b22;">char</span>)<span style="color: #a0522d;">element</span>.<span style="color: #a0522d;">Key</span>).ToString(),<span style="color: #a0522d;">element</span>.<span style="color: #a0522d;">Value</span>) ,<span style="color: #228b22;">comparer</span>));
+    <span style="color: #228b22;">Func</span>&lt;StringIntPair, StringIntPair, <span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">comparer</span> = (<span style="color: #228b22;">x</span>,<span style="color: #228b22;">y</span>) =&gt; <span style="color: #a0522d;">x</span>.<span style="color: #a0522d;">Value</span> - <span style="color: #a0522d;">y</span>.<span style="color: #a0522d;">Value</span>; 
+    <span style="color: #228b22;">var</span> <span style="color: #a0522d;">PQ</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">PriorityQueue</span>&lt;<span style="color: #228b22;">BinaryTree</span>&lt;StringIntPair&gt;&gt;((<span style="color: #228b22;">x</span>,<span style="color: #228b22;">y</span>) =&gt; comparer(<span style="color: #a0522d;">x</span>.<span style="color: #a0522d;">value</span>, <span style="color: #a0522d;">y</span>.<span style="color: #a0522d;">value</span>));
+    <span style="color: #0000ff;">foreach</span>(<span style="color: #228b22;">var</span> <span style="color: #a0522d;">element</span> <span style="color: #a020f0;">in</span> <span style="color: #a0522d;">hist</span>.<span style="color: #a0522d;">dict</span>) {
+      <span style="color: #228b22;">PQ</span>.<span style="color: #0000ff;">Enqueue</span>(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;StringIntPair&gt;(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">StringIntPair</span>(((<span style="color: #228b22;">char</span>)<span style="color: #a0522d;">element</span>.<span style="color: #a0522d;">Key</span>).ToString(),<span style="color: #a0522d;">element</span>.<span style="color: #a0522d;">Value</span>), <span style="color: #228b22;">comparer</span>));
     }
 
     <span style="color: #0000ff;">while</span> (<span style="color: #228b22;">PQ</span>.<span style="color: #0000ff;">Count</span>() &gt; 1) {
       <span style="color: #228b22;">var</span> <span style="color: #a0522d;">T1</span> = <span style="color: #228b22;">PQ</span>.<span style="color: #0000ff;">Dequeue</span>();
       <span style="color: #228b22;">var</span> <span style="color: #a0522d;">T2</span> = <span style="color: #228b22;">PQ</span>.<span style="color: #0000ff;">Dequeue</span>();
-      <span style="color: #228b22;">var</span> <span style="color: #a0522d;">newRoot</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;<span style="color: #228b22;">KeyValuePair</span>&lt;<span style="color: #228b22;">string</span>, <span style="color: #228b22;">int</span>&gt;&gt;(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">KeyValuePair</span>&lt;<span style="color: #228b22;">string</span>, <span style="color: #228b22;">int</span>&gt;(<span style="color: #228b22;">T1</span>.<span style="color: #a0522d;">value</span>.<span style="color: #a0522d;">Key</span> + <span style="color: #228b22;">T2</span>.<span style="color: #a0522d;">value</span>.<span style="color: #a0522d;">Key</span>, <span style="color: #228b22;">T1</span>.<span style="color: #a0522d;">value</span>.<span style="color: #a0522d;">Value</span>+<span style="color: #228b22;">T2</span>.<span style="color: #a0522d;">value</span>.<span style="color: #a0522d;">Value</span>) , <span style="color: #228b22;">comparer</span>);
+      <span style="color: #228b22;">var</span> <span style="color: #a0522d;">newRoot</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BinaryTree</span>&lt;StringIntPair&gt;(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">StringIntPair</span>(<span style="color: #228b22;">T1</span>.<span style="color: #a0522d;">value</span>.<span style="color: #a0522d;">Key</span> + <span style="color: #228b22;">T2</span>.<span style="color: #a0522d;">value</span>.<span style="color: #a0522d;">Key</span>, <span style="color: #228b22;">T1</span>.<span style="color: #a0522d;">value</span>.<span style="color: #a0522d;">Value</span>+<span style="color: #228b22;">T2</span>.<span style="color: #a0522d;">value</span>.<span style="color: #a0522d;">Value</span>), <span style="color: #228b22;">comparer</span>);
       <span style="color: #a0522d;">newRoot</span>.<span style="color: #a0522d;">left</span> = T1;
       <span style="color: #a0522d;">newRoot</span>.<span style="color: #a0522d;">right</span>= T2;
       <span style="color: #228b22;">PQ</span>.<span style="color: #0000ff;">Enqueue</span>(<span style="color: #228b22;">newRoot</span>);
@@ -498,7 +491,7 @@ mono demo/huffman.exe
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: thomas</p>
-<p class="date">Created: 2016-05-26 Do 17:22</p>
+<p class="date">Created: 2016-05-27 Fr 11:28</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
