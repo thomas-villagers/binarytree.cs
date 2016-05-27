@@ -40,8 +40,7 @@ using System.Collections.Generic;
       foreach(T value in values) Insert(value);
     }
 
-    override public string ToString()
-    {
+    override public string ToString() {
       string s = "";
       if (left != null)  s += left.ToString();
       s += string.Format("{0};", value);
@@ -115,8 +114,8 @@ public static class BinaryTreeExtensions {
 
   private static void PrintSubTree<T>(BinaryTree<T> tree, ref int empties) {
 
-    if (tree.left != null || tree.right != null)
-      Console.WriteLine("  \"{0}\" [shape=circle];", tree.value);
+  if (tree.left == null && tree.right == null)
+      Console.WriteLine("  \"{0}\" [shape=rectangle];", tree.value);
 
     if (tree.left != null) {
       PrintNode(tree.value, tree.left.value);
@@ -135,7 +134,6 @@ public static class BinaryTreeExtensions {
 
   public static void PrintDot<T>(this BinaryTree<T> tree) {
     Console.WriteLine("digraph G {");
-    Console.WriteLine("  node[shape=rectangle];");
     int empties = 0;
     PrintSubTree(tree, ref empties); 
     Console.WriteLine("}"); 
@@ -163,19 +161,17 @@ mono demo/treetest2.exe
 #+RESULTS:
 #+BEGIN_SRC dot :file images/tree1.png
 digraph G {
-  node[shape=rectangle];
-  "5" [shape=circle];
   "5" -> "3"
-  "3" [shape=circle];
   "3" -> "1"
-  "1" [shape=circle];
   empty0 [label="", style=invis];
   "1" -> empty0
   "1" -> "2"
+  "2" [shape=rectangle];
   "3" -> "4"
+  "4" [shape=rectangle];
   "5" -> "7"
-  "7" [shape=circle];
   "7" -> "6"
+  "6" [shape=rectangle];
   empty1 [label="", style=invis];
   "7" -> empty1
 }

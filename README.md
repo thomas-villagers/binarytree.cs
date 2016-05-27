@@ -54,8 +54,7 @@ A simple generic unbalanced binary tree.
           foreach(T value in values) Insert(value);
         }
     
-        override public string ToString()
-        {
+        override public string ToString() {
           string s = "";
           if (left != null)  s += left.ToString();
           s += string.Format("{0};", value);
@@ -120,8 +119,8 @@ A simple generic unbalanced binary tree.
     
       private static void PrintSubTree<T>(BinaryTree<T> tree, ref int empties) {
     
-        if (tree.left != null || tree.right != null)
-          Console.WriteLine("  \"{0}\" [shape=circle];", tree.value);
+      if (tree.left == null && tree.right == null)
+          Console.WriteLine("  \"{0}\" [shape=rectangle];", tree.value);
     
         if (tree.left != null) {
           PrintNode(tree.value, tree.left.value);
@@ -140,7 +139,6 @@ A simple generic unbalanced binary tree.
     
       public static void PrintDot<T>(this BinaryTree<T> tree) {
         Console.WriteLine("digraph G {");
-        Console.WriteLine("  node[shape=rectangle];");
         int empties = 0;
         PrintSubTree(tree, ref empties); 
         Console.WriteLine("}"); 

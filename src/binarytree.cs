@@ -33,8 +33,7 @@ using System.Collections.Generic;
       foreach(T value in values) Insert(value);
     }
 
-    override public string ToString()
-    {
+    override public string ToString() {
       string s = "";
       if (left != null)  s += left.ToString();
       s += string.Format("{0};", value);

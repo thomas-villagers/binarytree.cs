@@ -13,8 +13,8 @@ public static class BinaryTreeExtensions {
 
   private static void PrintSubTree<T>(BinaryTree<T> tree, ref int empties) {
 
-    if (tree.left != null || tree.right != null)
-      Console.WriteLine("  \"{0}\" [shape=circle];", tree.value);
+  if (tree.left == null && tree.right == null)
+      Console.WriteLine("  \"{0}\" [shape=rectangle];", tree.value);
 
     if (tree.left != null) {
       PrintNode(tree.value, tree.left.value);
@@ -33,7 +33,6 @@ public static class BinaryTreeExtensions {
 
   public static void PrintDot<T>(this BinaryTree<T> tree) {
     Console.WriteLine("digraph G {");
-    Console.WriteLine("  node[shape=rectangle];");
     int empties = 0;
     PrintSubTree(tree, ref empties); 
     Console.WriteLine("}"); 
