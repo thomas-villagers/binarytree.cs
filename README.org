@@ -208,20 +208,16 @@ mono demo/treetest3.exe
 #+RESULTS:
 #+BEGIN_SRC dot :file images/tree2.png
 digraph G {
-  node[shape=rectangle];
-  "Tywin" [shape=circle];
   "Tywin" -> "Cersei"
-  "Cersei" [shape=circle];
   empty0 [label="", style=invis];
   "Cersei" -> empty0
   "Cersei" -> "Tyrion"
-  "Tyrion" [shape=circle];
   "Tyrion" -> "Joffrey"
-  "Joffrey" [shape=circle];
   "Joffrey" -> "Jamie"
+  "Jamie" [shape=rectangle];
   "Joffrey" -> "Tommen"
-  "Tommen" [shape=circle];
   "Tommen" -> "Myrcella"
+  "Myrcella" [shape=rectangle];
   empty1 [label="", style=invis];
   "Tommen" -> empty1
   empty2 [label="", style=invis];
@@ -324,52 +320,52 @@ mono demo/huffman.exe
 #+RESULTS:
 #+BEGIN_SRC dot :file images/tree3.png
 digraph G {
-  node[shape=rectangle];
-  "[ skdarefuvihnobt, 46]" [shape=circle];
   "[ skdarefuvihnobt, 46]" -> "[ skda, 19]"
-  "[ skda, 19]" [shape=circle];
   "[ skda, 19]" -> "[ , 9]"
+  "[ , 9]" [shape=rectangle];
   "[ skda, 19]" -> "[skda, 10]"
-  "[skda, 10]" [shape=circle];
   "[skda, 10]" -> "[skd, 5]"
-  "[skd, 5]" [shape=circle];
   "[skd, 5]" -> "[sk, 2]"
-  "[sk, 2]" [shape=circle];
   "[sk, 2]" -> "[s, 1]"
+  "[s, 1]" [shape=rectangle];
   "[sk, 2]" -> "[k, 1]"
+  "[k, 1]" [shape=rectangle];
   "[skd, 5]" -> "[d, 3]"
+  "[d, 3]" [shape=rectangle];
   "[skda, 10]" -> "[a, 5]"
+  "[a, 5]" [shape=rectangle];
   "[ skdarefuvihnobt, 46]" -> "[refuvihnobt, 27]"
-  "[refuvihnobt, 27]" [shape=circle];
   "[refuvihnobt, 27]" -> "[re, 12]"
-  "[re, 12]" [shape=circle];
   "[re, 12]" -> "[r, 5]"
+  "[r, 5]" [shape=rectangle];
   "[re, 12]" -> "[e, 7]"
+  "[e, 7]" [shape=rectangle];
   "[refuvihnobt, 27]" -> "[fuvihnobt, 15]"
-  "[fuvihnobt, 15]" [shape=circle];
   "[fuvihnobt, 15]" -> "[fuvih, 7]"
-  "[fuvih, 7]" [shape=circle];
   "[fuvih, 7]" -> "[f, 3]"
+  "[f, 3]" [shape=rectangle];
   "[fuvih, 7]" -> "[uvih, 4]"
-  "[uvih, 4]" [shape=circle];
   "[uvih, 4]" -> "[uv, 2]"
-  "[uv, 2]" [shape=circle];
   "[uv, 2]" -> "[u, 1]"
+  "[u, 1]" [shape=rectangle];
   "[uv, 2]" -> "[v, 1]"
+  "[v, 1]" [shape=rectangle];
   "[uvih, 4]" -> "[ih, 2]"
-  "[ih, 2]" [shape=circle];
   "[ih, 2]" -> "[i, 1]"
+  "[i, 1]" [shape=rectangle];
   "[ih, 2]" -> "[h, 1]"
+  "[h, 1]" [shape=rectangle];
   "[fuvihnobt, 15]" -> "[nobt, 8]"
-  "[nobt, 8]" [shape=circle];
   "[nobt, 8]" -> "[n, 4]"
+  "[n, 4]" [shape=rectangle];
   "[nobt, 8]" -> "[obt, 4]"
-  "[obt, 4]" [shape=circle];
   "[obt, 4]" -> "[ob, 2]"
-  "[ob, 2]" [shape=circle];
   "[ob, 2]" -> "[o, 1]"
+  "[o, 1]" [shape=rectangle];
   "[ob, 2]" -> "[b, 1]"
+  "[b, 1]" [shape=rectangle];
   "[obt, 4]" -> "[t, 2]"
+  "[t, 2]" [shape=rectangle];
 }
 #+END_SRC
 
