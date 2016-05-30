@@ -252,14 +252,14 @@ digraph G {
     }
 
     public T Dequeue() {
-      var element = list[0];
-      list.RemoveAt(0);
+      var element = list[list.Count-1];
+      list.RemoveAt(list.Count-1); // removal of last element is O(1)
       return element; 
     }
 
     public void Enqueue(T element) { 
       list.Add(element);
-      list.Sort((x,y) => comparer(x,y)); 
+      list.Sort((x,y) => -1*comparer(x,y)); // reverse sort order such that smallest element is at end of list
     } 
 
     public int Count() {
@@ -320,52 +320,52 @@ mono demo/huffman.exe
 #+RESULTS:
 #+BEGIN_SRC dot :file images/tree3.png
 digraph G {
-  "[ skdarefuvihnobt, 46]" -> "[ skda, 19]"
-  "[ skda, 19]" -> "[ , 9]"
+  "[ ratdefnsbkouhiv, 46]" -> "[ ra, 19]"
+  "[ ra, 19]" -> "[ , 9]"
   "[ , 9]" [shape=rectangle];
-  "[ skda, 19]" -> "[skda, 10]"
-  "[skda, 10]" -> "[skd, 5]"
-  "[skd, 5]" -> "[sk, 2]"
-  "[sk, 2]" -> "[s, 1]"
-  "[s, 1]" [shape=rectangle];
-  "[sk, 2]" -> "[k, 1]"
-  "[k, 1]" [shape=rectangle];
-  "[skd, 5]" -> "[d, 3]"
-  "[d, 3]" [shape=rectangle];
-  "[skda, 10]" -> "[a, 5]"
-  "[a, 5]" [shape=rectangle];
-  "[ skdarefuvihnobt, 46]" -> "[refuvihnobt, 27]"
-  "[refuvihnobt, 27]" -> "[re, 12]"
-  "[re, 12]" -> "[r, 5]"
+  "[ ra, 19]" -> "[ra, 10]"
+  "[ra, 10]" -> "[r, 5]"
   "[r, 5]" [shape=rectangle];
-  "[re, 12]" -> "[e, 7]"
-  "[e, 7]" [shape=rectangle];
-  "[refuvihnobt, 27]" -> "[fuvihnobt, 15]"
-  "[fuvihnobt, 15]" -> "[fuvih, 7]"
-  "[fuvih, 7]" -> "[f, 3]"
-  "[f, 3]" [shape=rectangle];
-  "[fuvih, 7]" -> "[uvih, 4]"
-  "[uvih, 4]" -> "[uv, 2]"
-  "[uv, 2]" -> "[u, 1]"
-  "[u, 1]" [shape=rectangle];
-  "[uv, 2]" -> "[v, 1]"
-  "[v, 1]" [shape=rectangle];
-  "[uvih, 4]" -> "[ih, 2]"
-  "[ih, 2]" -> "[i, 1]"
-  "[i, 1]" [shape=rectangle];
-  "[ih, 2]" -> "[h, 1]"
-  "[h, 1]" [shape=rectangle];
-  "[fuvihnobt, 15]" -> "[nobt, 8]"
-  "[nobt, 8]" -> "[n, 4]"
-  "[n, 4]" [shape=rectangle];
-  "[nobt, 8]" -> "[obt, 4]"
-  "[obt, 4]" -> "[ob, 2]"
-  "[ob, 2]" -> "[o, 1]"
-  "[o, 1]" [shape=rectangle];
-  "[ob, 2]" -> "[b, 1]"
-  "[b, 1]" [shape=rectangle];
-  "[obt, 4]" -> "[t, 2]"
+  "[ra, 10]" -> "[a, 5]"
+  "[a, 5]" [shape=rectangle];
+  "[ ratdefnsbkouhiv, 46]" -> "[tdefnsbkouhiv, 27]"
+  "[tdefnsbkouhiv, 27]" -> "[tde, 12]"
+  "[tde, 12]" -> "[td, 5]"
+  "[td, 5]" -> "[t, 2]"
   "[t, 2]" [shape=rectangle];
+  "[td, 5]" -> "[d, 3]"
+  "[d, 3]" [shape=rectangle];
+  "[tde, 12]" -> "[e, 7]"
+  "[e, 7]" [shape=rectangle];
+  "[tdefnsbkouhiv, 27]" -> "[fnsbkouhiv, 15]"
+  "[fnsbkouhiv, 15]" -> "[fn, 7]"
+  "[fn, 7]" -> "[f, 3]"
+  "[f, 3]" [shape=rectangle];
+  "[fn, 7]" -> "[n, 4]"
+  "[n, 4]" [shape=rectangle];
+  "[fnsbkouhiv, 15]" -> "[sbkouhiv, 8]"
+  "[sbkouhiv, 8]" -> "[sbko, 4]"
+  "[sbko, 4]" -> "[sb, 2]"
+  "[sb, 2]" -> "[s, 1]"
+  "[s, 1]" [shape=rectangle];
+  "[sb, 2]" -> "[b, 1]"
+  "[b, 1]" [shape=rectangle];
+  "[sbko, 4]" -> "[ko, 2]"
+  "[ko, 2]" -> "[k, 1]"
+  "[k, 1]" [shape=rectangle];
+  "[ko, 2]" -> "[o, 1]"
+  "[o, 1]" [shape=rectangle];
+  "[sbkouhiv, 8]" -> "[uhiv, 4]"
+  "[uhiv, 4]" -> "[uh, 2]"
+  "[uh, 2]" -> "[u, 1]"
+  "[u, 1]" [shape=rectangle];
+  "[uh, 2]" -> "[h, 1]"
+  "[h, 1]" [shape=rectangle];
+  "[uhiv, 4]" -> "[iv, 2]"
+  "[iv, 2]" -> "[i, 1]"
+  "[i, 1]" [shape=rectangle];
+  "[iv, 2]" -> "[v, 1]"
+  "[v, 1]" [shape=rectangle];
 }
 #+END_SRC
 

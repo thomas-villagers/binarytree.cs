@@ -202,14 +202,14 @@ Another Example:
       }
     
       public T Dequeue() {
-        var element = list[0];
-        list.RemoveAt(0);
+        var element = list[list.Count-1];
+        list.RemoveAt(list.Count-1); // removal of last element is O(1)
         return element; 
       }
     
       public void Enqueue(T element) { 
         list.Add(element);
-        list.Sort((x,y) => comparer(x,y)); 
+        list.Sort((x,y) => -1*comparer(x,y)); // reverse sort order such that smallest element is at end of list
       } 
     
       public int Count() {
