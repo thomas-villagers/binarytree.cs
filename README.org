@@ -51,9 +51,7 @@ using System.Collections.Generic;
 #+END_SRC
 
 
-* Demo 
-
-** Tree Insertion and LMR-Traversion 
+* Demo: Tree Insertion and LMR-Traversion 
 
 #+BEGIN_SRC csharp :tangle demo/treetest1.cs 
 using System; 
@@ -95,8 +93,10 @@ mono demo/treetest1.exe
 : 0,99;2,34;3,14;3,1415;
 : Cersei;Jamie;Joffrey;Myrcella;Tommen;Tyrion;Tywin;
 
-** Graphviz-Output
-   CLOSED: [2016-05-26 Do 17:01]
+* Graphviz-Output
+  CLOSED: [2016-05-26 Do 17:01]
+
+** Extensions
 
 #+BEGIN_SRC csharp :tangle src/binarytreeextensions.cs
 using System; 
@@ -141,6 +141,8 @@ public static class BinaryTreeExtensions {
 }
 #+END_SRC
 
+** Example
+
 Call extension method ~PrintDot~ and feed the results into [[http://www.graphviz.org/][Graphviz]]: 
 
 #+BEGIN_SRC csharp :tangle demo/treetest2.cs 
@@ -180,7 +182,7 @@ digraph G {
 #+RESULTS:
 [[file:images/tree1.png]]
 
-Another Example: 
+** Another Example 
 
 #+BEGIN_SRC csharp :tangle demo/treetest3.cs 
 using System; 
@@ -231,8 +233,8 @@ digraph G {
 [[file:images/tree2.png]]
 
 
-** Application: Huffman-Encoding 
-   CLOSED: [2016-05-26 Do 17:04]
+* Application: Huffman-Encoding 
+  CLOSED: [2016-05-26 Do 17:04]
 
 #+BEGIN_SRC csharp  :tangle demo/huffman.cs
   using System;

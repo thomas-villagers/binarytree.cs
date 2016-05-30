@@ -3,13 +3,15 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgheadline1">1. Generic Tree Class</a></li>
-<li><a href="#orgheadline5">2. Demo</a>
+<li><a href="#orgheadline2">2. Demo: Tree Insertion and LMR-Traversion</a></li>
+<li><a href="#orgheadline6">3. Graphviz-Output</a>
 <ul>
-<li><a href="#orgheadline2">2.1. Tree Insertion and LMR-Traversion</a></li>
-<li><a href="#orgheadline3">2.2. Graphviz-Output</a></li>
-<li><a href="#orgheadline4">2.3. Application: Huffman-Encoding</a></li>
+<li><a href="#orgheadline3">3.1. Extensions</a></li>
+<li><a href="#orgheadline4">3.2. Example</a></li>
+<li><a href="#orgheadline5">3.3. Another Example</a></li>
 </ul>
 </li>
+<li><a href="#orgheadline7">4. Application: Huffman-Encoding</a></li>
 </ul>
 </div>
 </div>
@@ -63,9 +65,7 @@ A simple generic unbalanced binary tree.
         }
       }
 
-# Demo<a id="orgheadline5"></a>
-
-## Tree Insertion and LMR-Traversion<a id="orgheadline2"></a>
+# Demo: Tree Insertion and LMR-Traversion<a id="orgheadline2"></a>
 
     using System; 
     
@@ -102,7 +102,9 @@ A simple generic unbalanced binary tree.
     0,99;2,34;3,14;3,1415;
     Cersei;Jamie;Joffrey;Myrcella;Tommen;Tyrion;Tywin;
 
-## Graphviz-Output<a id="orgheadline3"></a>
+# Graphviz-Output<a id="orgheadline6"></a>
+
+## Extensions<a id="orgheadline3"></a>
 
     using System; 
     
@@ -145,6 +147,8 @@ A simple generic unbalanced binary tree.
       }
     }
 
+## Example<a id="orgheadline4"></a>
+
 Call extension method `PrintDot` and feed the results into [Graphviz](http://www.graphviz.org/): 
 
     class TreeTest {
@@ -160,7 +164,7 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
 
 ![img](images/tree1.png)
 
-Another Example: 
+## Another Example<a id="orgheadline5"></a>
 
     using System; 
     
@@ -183,7 +187,7 @@ Another Example:
 
 ![img](images/tree2.png)
 
-## Application: Huffman-Encoding<a id="orgheadline4"></a>
+# Application: Huffman-Encoding<a id="orgheadline7"></a>
 
     using System;
     using System.Collections.Generic; 
