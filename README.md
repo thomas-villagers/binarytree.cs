@@ -216,8 +216,8 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
         list.Sort((x,y) => -1*comparer(x,y)); // reverse sort order such that smallest element is at end of list
       } 
     
-      public int Count() {
-        return list.Count();
+      public int Count {
+        get { return list.Count; }
       }
     }
     
@@ -231,20 +231,11 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
           dict[c] = dict.ContainsKey(c) ? dict[c]+1 : 1; 
         }
       }
-    
-      override public string ToString() {
-        string s=""; 
-        foreach(var entry in dict) {
-          s+= string.Format("{0}|{1}\n", (char)entry.Key, entry.Value);
-        }
-        return s;
-      }
     }
     
     class Huffman {
     
       public static void Main() {
-        //  StringHistogram hist = new StringHistogram("Hello World!")
         StringHistogram hist = new StringHistogram("a fast runner need never be afraid of the dark"); 
     
         Func<StringIntPair, StringIntPair, int> comparer = (x,y) => x.Value - y.Value; 
@@ -253,7 +244,7 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
           PQ.Enqueue(new BinaryTree<StringIntPair>(new StringIntPair(((char)element.Key).ToString(),element.Value), comparer));
         }
     
-        while (PQ.Count() > 1) {
+        while (PQ.Count > 1) {
           var T1 = PQ.Dequeue();
           var T2 = PQ.Dequeue();
           var newRoot = new BinaryTree<StringIntPair>(new StringIntPair(T1.value.Key + T2.value.Key, T1.value.Value+T2.value.Value), comparer);
