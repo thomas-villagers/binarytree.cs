@@ -39,19 +39,66 @@ using System.Collections.Generic;
     public void Insert(params T[] values) {
       foreach(T value in values) Insert(value);
     }
-
-    override public string ToString() {
-      string s = "";
-      if (left != null)  s += left.ToString();
-      s += string.Format("{0};", value);
-      if (right != null) s += right.ToString();
-      return s;
-    }
   }
 #+END_SRC
 
+* Tree Insertion and Traversion 
 
-* Demo: Tree Insertion and LMR-Traversion 
+** List Extension 
+
+#+BEGIN_SRC csharp :tangle src/binarytreelistextensions.cs 
+using System; 
+using System.Collections.Generic; 
+
+static class BinaryTreeListExtensions {
+
+  public delegate void TraversalDelegate<T>(BinaryTree<T> tree, List<T> list); 
+
+  private static void TraversePreorder<T>(BinaryTree<T> tree, List<T> list) {
+    if (tree.left != null) TraversePreorder(tree.left, list);
+    list.Add(tree.value);
+    if (tree.right != null) TraversePreorder(tree.right, list); 
+  }
+
+  private static void TraversePostorder<T>(BinaryTree<T> tree, List<T> list) {
+    if (tree.right != null) TraversePostorder(tree.right, list); 
+    list.Add(tree.value);
+    if (tree.left != null) TraversePostorder(tree.left, list);
+  }
+
+  private static void TraverseInorder<T>(BinaryTree<T> tree, List<T> list) {
+    list.Add(tree.value);
+    if (tree.right != null) TraverseInorder(tree.right, list); 
+    if (tree.left != null) TraverseInorder(tree.left, list);
+  }
+
+  public static TraversalDelegate<T> Postorder<T>(this BinaryTree<T> tree) {  // is there a better way to do this? 
+    return TraversePostorder<T>; 
+  }
+
+  public static TraversalDelegate<T> Preorder<T>(this BinaryTree<T> tree) {
+    return TraversePreorder<T>; 
+  }
+
+  public static TraversalDelegate<T> Inorder<T>(this BinaryTree<T> tree) {
+    return TraverseInorder<T>; 
+  }
+
+  public static List<T> ToList<T>(this BinaryTree<T> tree, TraversalDelegate<T> traversalmethod) {
+    var list = new List<T>();
+    traversalmethod(tree, list);
+    return list;
+  }
+
+  public static List<T> ToList<T>(this BinaryTree<T> tree) {
+    return tree.ToList<T>(TraversePreorder<T>);
+  }
+
+}
+
+#+END_SRC
+
+** Example 
 
 #+BEGIN_SRC csharp :tangle demo/treetest1.cs 
 using System; 
@@ -60,43 +107,91 @@ class TreeTest {
 
   public static void Main()
   {
-    var root = new BinaryTree<int>(5); 
-    root.Insert(3);
-    root.Insert(7);
-    root.Insert(1);
-    root.Insert(4);
-    root.Insert(6);
-    root.Insert(2);  
-    Console.WriteLine(root);
-
+    var inttree = new BinaryTree<int>(5); 
+    inttree.Insert(3);
+    inttree.Insert(7);
+    inttree.Insert(1);
+    inttree.Insert(4);
+    inttree.Insert(6);
+    inttree.Insert(2);  
+    foreach (var i in inttree.ToList()) 
+      Console.WriteLine(i);
+    foreach (var i in inttree.ToList(inttree.Postorder())) 
+      Console.WriteLine(i);
+    foreach (var i in inttree.ToList(inttree.Inorder())) 
+      Console.WriteLine(i);
+    
     var floattree = new BinaryTree<float>(3.14f); 
     floattree.Insert(0.99f, 2.34f, 3.1415f);
-    Console.WriteLine(floattree);
+    foreach (var f in floattree.ToList()) 
+      Console.WriteLine(f);
 
     var lannisters = new BinaryTree<string>("Tywin");
     lannisters.Insert("Cersei","Tyrion","Joffrey");
     lannisters.Insert("Tommen");
     lannisters.Insert("Myrcella");
     lannisters.Insert("Jamie");
-    Console.WriteLine(lannisters);
+    foreach (var s in lannisters.ToList()) 
+      Console.WriteLine(s);
+    foreach (var s in lannisters.ToList(lannisters.Postorder()))
+      Console.WriteLine(s);
+
   }
 }
 #+END_SRC
 
 #+BEGIN_SRC sh :results output :exports both
-mcs demo/treetest1.cs src/binarytree.cs
+mcs demo/treetest1.cs src/binarytree.cs src/binarytreelistextensions.cs 
 mono demo/treetest1.exe
 #+END_SRC
 
 #+RESULTS:
-: 1;2;3;4;5;6;7;
-: 0,99;2,34;3,14;3,1415;
-: Cersei;Jamie;Joffrey;Myrcella;Tommen;Tyrion;Tywin;
+#+begin_example
+1
+2
+3
+4
+5
+6
+7
+7
+6
+5
+4
+3
+2
+1
+5
+7
+6
+3
+4
+1
+2
+0,99
+2,34
+3,14
+3,1415
+Cersei
+Jamie
+Joffrey
+Myrcella
+Tommen
+Tyrion
+Tywin
+Tywin
+Tyrion
+Tommen
+Myrcella
+Joffrey
+Jamie
+Cersei
+#+end_example
 
 * Graphviz-Output
   CLOSED: [2016-05-26 Do 17:01]
 
-** Extensions
+** Extension
 
 #+BEGIN_SRC csharp :tangle src/binarytreeextensions.cs
 using System; 
@@ -114,8 +209,10 @@ public static class BinaryTreeExtensions {
 
   private static void PrintSubTree<T>(BinaryTree<T> tree, ref int empties) {
 
-    if (tree.left == null && tree.right == null)
+    if (tree.left == null && tree.right == null) {
       Console.WriteLine("  \"{0}\" [shape=rectangle];", tree.value);
+      return;
+    }
 
     if (tree.left != null) {
       PrintNode(tree.value, tree.left.value);
@@ -231,8 +328,6 @@ digraph G {
 
 #+RESULTS:
 [[file:images/tree2.png]]
-
-
 * Application: Huffman-Encoding 
   CLOSED: [2016-05-26 Do 17:04]
 

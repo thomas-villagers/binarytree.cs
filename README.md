@@ -3,15 +3,20 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgheadline1">1. Generic Tree Class</a></li>
-<li><a href="#orgheadline2">2. Demo: Tree Insertion and LMR-Traversion</a></li>
-<li><a href="#orgheadline6">3. Graphviz-Output</a>
+<li><a href="#orgheadline4">2. Tree Insertion and Traversion</a>
 <ul>
-<li><a href="#orgheadline3">3.1. Extensions</a></li>
-<li><a href="#orgheadline4">3.2. Example</a></li>
-<li><a href="#orgheadline5">3.3. Another Example</a></li>
+<li><a href="#orgheadline2">2.1. List Extension</a></li>
+<li><a href="#orgheadline3">2.2. Example</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline7">4. Application: Huffman-Encoding</a></li>
+<li><a href="#orgheadline8">3. Graphviz-Output</a>
+<ul>
+<li><a href="#orgheadline5">3.1. Extension</a></li>
+<li><a href="#orgheadline6">3.2. Example</a></li>
+<li><a href="#orgheadline7">3.3. Another Example</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline9">4. Application: Huffman-Encoding</a></li>
 </ul>
 </div>
 </div>
@@ -55,17 +60,62 @@ A simple generic unbalanced binary tree.
         public void Insert(params T[] values) {
           foreach(T value in values) Insert(value);
         }
-    
-        override public string ToString() {
-          string s = "";
-          if (left != null)  s += left.ToString();
-          s += string.Format("{0};", value);
-          if (right != null) s += right.ToString();
-          return s;
-        }
       }
 
-# Demo: Tree Insertion and LMR-Traversion<a id="orgheadline2"></a>
+# Tree Insertion and Traversion<a id="orgheadline4"></a>
+
+## List Extension<a id="orgheadline2"></a>
+
+    using System; 
+    using System.Collections.Generic; 
+    
+    static class BinaryTreeListExtensions {
+    
+      public delegate void TraversalDelegate<T>(BinaryTree<T> tree, List<T> list); 
+    
+      private static void TraversePreorder<T>(BinaryTree<T> tree, List<T> list) {
+        if (tree.left != null) TraversePreorder(tree.left, list);
+        list.Add(tree.value);
+        if (tree.right != null) TraversePreorder(tree.right, list); 
+      }
+    
+      private static void TraversePostorder<T>(BinaryTree<T> tree, List<T> list) {
+        if (tree.right != null) TraversePostorder(tree.right, list); 
+        list.Add(tree.value);
+        if (tree.left != null) TraversePostorder(tree.left, list);
+      }
+    
+      private static void TraverseInorder<T>(BinaryTree<T> tree, List<T> list) {
+        list.Add(tree.value);
+        if (tree.right != null) TraverseInorder(tree.right, list); 
+        if (tree.left != null) TraverseInorder(tree.left, list);
+      }
+    
+      public static TraversalDelegate<T> Postorder<T>(this BinaryTree<T> tree) {  // is there a better way to do this? 
+        return TraversePostorder<T>; 
+      }
+    
+      public static TraversalDelegate<T> Preorder<T>(this BinaryTree<T> tree) {
+        return TraversePreorder<T>; 
+      }
+    
+      public static TraversalDelegate<T> Inorder<T>(this BinaryTree<T> tree) {
+        return TraverseInorder<T>; 
+      }
+    
+      public static List<T> ToList<T>(this BinaryTree<T> tree, TraversalDelegate<T> traversalmethod) {
+        var list = new List<T>();
+        traversalmethod(tree, list);
+        return list;
+      }
+    
+      public static List<T> ToList<T>(this BinaryTree<T> tree) {
+        return tree.ToList<T>(TraversePreorder<T>);
+      }
+    
+    }
+
+## Example<a id="orgheadline3"></a>
 
     using System; 
     
@@ -73,38 +123,84 @@ A simple generic unbalanced binary tree.
     
       public static void Main()
       {
-        var root = new BinaryTree<int>(5); 
-        root.Insert(3);
-        root.Insert(7);
-        root.Insert(1);
-        root.Insert(4);
-        root.Insert(6);
-        root.Insert(2);  
-        Console.WriteLine(root);
+        var inttree = new BinaryTree<int>(5); 
+        inttree.Insert(3);
+        inttree.Insert(7);
+        inttree.Insert(1);
+        inttree.Insert(4);
+        inttree.Insert(6);
+        inttree.Insert(2);  
+        foreach (var i in inttree.ToList()) 
+          Console.WriteLine(i);
+        foreach (var i in inttree.ToList(inttree.Postorder())) 
+          Console.WriteLine(i);
+        foreach (var i in inttree.ToList(inttree.Inorder())) 
+          Console.WriteLine(i);
     
         var floattree = new BinaryTree<float>(3.14f); 
         floattree.Insert(0.99f, 2.34f, 3.1415f);
-        Console.WriteLine(floattree);
+        foreach (var f in floattree.ToList()) 
+          Console.WriteLine(f);
     
         var lannisters = new BinaryTree<string>("Tywin");
         lannisters.Insert("Cersei","Tyrion","Joffrey");
         lannisters.Insert("Tommen");
         lannisters.Insert("Myrcella");
         lannisters.Insert("Jamie");
-        Console.WriteLine(lannisters);
+        foreach (var s in lannisters.ToList()) 
+          Console.WriteLine(s);
+        foreach (var s in lannisters.ToList(lannisters.Postorder()))
+          Console.WriteLine(s);
+    
       }
     }
 
-    mcs demo/treetest1.cs src/binarytree.cs
+    mcs demo/treetest1.cs src/binarytree.cs src/binarytreelistextensions.cs 
     mono demo/treetest1.exe
 
-    1;2;3;4;5;6;7;
-    0,99;2,34;3,14;3,1415;
-    Cersei;Jamie;Joffrey;Myrcella;Tommen;Tyrion;Tywin;
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    7
+    6
+    5
+    4
+    3
+    2
+    1
+    5
+    7
+    6
+    3
+    4
+    1
+    2
+    0,99
+    2,34
+    3,14
+    3,1415
+    Cersei
+    Jamie
+    Joffrey
+    Myrcella
+    Tommen
+    Tyrion
+    Tywin
+    Tywin
+    Tyrion
+    Tommen
+    Myrcella
+    Joffrey
+    Jamie
+    Cersei
 
-# Graphviz-Output<a id="orgheadline6"></a>
+# Graphviz-Output<a id="orgheadline8"></a>
 
-## Extensions<a id="orgheadline3"></a>
+## Extension<a id="orgheadline5"></a>
 
     using System; 
     
@@ -121,8 +217,10 @@ A simple generic unbalanced binary tree.
     
       private static void PrintSubTree<T>(BinaryTree<T> tree, ref int empties) {
     
-        if (tree.left == null && tree.right == null)
+        if (tree.left == null && tree.right == null) {
           Console.WriteLine("  \"{0}\" [shape=rectangle];", tree.value);
+          return;
+        }
     
         if (tree.left != null) {
           PrintNode(tree.value, tree.left.value);
@@ -147,7 +245,7 @@ A simple generic unbalanced binary tree.
       }
     }
 
-## Example<a id="orgheadline4"></a>
+## Example<a id="orgheadline6"></a>
 
 Call extension method `PrintDot` and feed the results into [Graphviz](http://www.graphviz.org/): 
 
@@ -164,7 +262,7 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
 
 ![img](images/tree1.png)
 
-## Another Example<a id="orgheadline5"></a>
+## Another Example<a id="orgheadline7"></a>
 
     using System; 
     
@@ -187,7 +285,7 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
 
 ![img](images/tree2.png)
 
-# Application: Huffman-Encoding<a id="orgheadline7"></a>
+# Application: Huffman-Encoding<a id="orgheadline9"></a>
 
     using System;
     using System.Collections.Generic; 

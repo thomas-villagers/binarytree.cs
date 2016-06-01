@@ -13,8 +13,10 @@ public static class BinaryTreeExtensions {
 
   private static void PrintSubTree<T>(BinaryTree<T> tree, ref int empties) {
 
-    if (tree.left == null && tree.right == null)
+    if (tree.left == null && tree.right == null) {
       Console.WriteLine("  \"{0}\" [shape=rectangle];", tree.value);
+      return;
+    }
 
     if (tree.left != null) {
       PrintNode(tree.value, tree.left.value);

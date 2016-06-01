@@ -32,12 +32,4 @@ using System.Collections.Generic;
     public void Insert(params T[] values) {
       foreach(T value in values) Insert(value);
     }
-
-    override public string ToString() {
-      string s = "";
-      if (left != null)  s += left.ToString();
-      s += string.Format("{0};", value);
-      if (right != null) s += right.ToString();
-      return s;
-    }
   }
