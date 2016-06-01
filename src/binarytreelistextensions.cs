@@ -23,7 +23,7 @@ static class BinaryTreeListExtensions {
     if (tree.left != null) TraverseInorder(tree.left, list);
   }
 
-  public static TraversalDelegate<T> Postorder<T>(this BinaryTree<T> tree) {
+  public static TraversalDelegate<T> Postorder<T>(this BinaryTree<T> tree) {  // is there a better way to do this? 
     return TraversePostorder<T>; 
   }
 
