@@ -3,20 +3,16 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgheadline1">1. Generic Tree Class</a></li>
-<li><a href="#orgheadline4">2. Tree Insertion and Traversion</a>
+<li><a href="#orgheadline2">2. ToList Extension</a></li>
+<li><a href="#orgheadline3">3. Graphviz Extension</a></li>
+<li><a href="#orgheadline7">4. Demo</a>
 <ul>
-<li><a href="#orgheadline2">2.1. List Extension</a></li>
-<li><a href="#orgheadline3">2.2. Example</a></li>
+<li><a href="#orgheadline4">4.1. Insert and Traversion</a></li>
+<li><a href="#orgheadline5">4.2. Draw Tree</a></li>
+<li><a href="#orgheadline6">4.3. Draw another Tree</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline8">3. Graphviz-Output</a>
-<ul>
-<li><a href="#orgheadline5">3.1. Extension</a></li>
-<li><a href="#orgheadline6">3.2. Example</a></li>
-<li><a href="#orgheadline7">3.3. Another Example</a></li>
-</ul>
-</li>
-<li><a href="#orgheadline9">4. Application: Huffman-Encoding</a></li>
+<li><a href="#orgheadline8">5. Application: Huffman-Encoding</a></li>
 </ul>
 </div>
 </div>
@@ -35,25 +31,27 @@ A simple generic unbalanced binary tree.
         public BinaryTree<T> right;
     
         public readonly T value;
-        Func<T, T, int> comparer; 
+        public delegate int CompareDelegate(T v1, T v2); 
+        CompareDelegate compare = Comparer<T>.Default.Compare;
     
-        public BinaryTree(T value, Func<T, T, int> comparer) {
+        public BinaryTree(T value) {
           this.value = value;
-          this.comparer = comparer;
           left = null;
           right = null;
         }
     
-        public BinaryTree(T value) : this(value, (x,y) => Comparer<T>.Default.Compare(x,y)) { }
+        public BinaryTree(T value, CompareDelegate compare) : this(value) {
+          this.compare = compare; 
+        }
     
         public void Insert(T value) {
-          if (comparer(value, this.value) < 0)
+          if (compare(value, this.value) < 0)
           {
-            if (left == null) left = new BinaryTree<T>(value, comparer);
+            if (left == null) left = new BinaryTree<T>(value, compare);
             else left.Insert(value);
           }
           else  if (right == null)
-            right = new BinaryTree<T>(value, comparer);
+            right = new BinaryTree<T>(value, compare);
           else right.Insert(value);
         }
     
@@ -62,9 +60,7 @@ A simple generic unbalanced binary tree.
         }
       }
 
-# Tree Insertion and Traversion<a id="orgheadline4"></a>
-
-## List Extension<a id="orgheadline2"></a>
+# ToList Extension<a id="orgheadline2"></a>
 
     using System; 
     using System.Collections.Generic; 
@@ -87,8 +83,8 @@ A simple generic unbalanced binary tree.
     
       private static void TraverseInorder<T>(BinaryTree<T> tree, List<T> list) {
         list.Add(tree.value);
-        if (tree.right != null) TraverseInorder(tree.right, list); 
         if (tree.left != null) TraverseInorder(tree.left, list);
+        if (tree.right != null) TraverseInorder(tree.right, list); 
       }
     
       public static TraversalDelegate<T> Postorder<T>(this BinaryTree<T> tree) {  // is there a better way to do this? 
@@ -112,95 +108,9 @@ A simple generic unbalanced binary tree.
       public static List<T> ToList<T>(this BinaryTree<T> tree) {
         return tree.ToList<T>(TraversePreorder<T>);
       }
-    
     }
 
-## Example<a id="orgheadline3"></a>
-
-    using System; 
-    
-    class TreeTest {
-    
-      public static void Main()
-      {
-        var inttree = new BinaryTree<int>(5); 
-        inttree.Insert(3);
-        inttree.Insert(7);
-        inttree.Insert(1);
-        inttree.Insert(4);
-        inttree.Insert(6);
-        inttree.Insert(2);  
-        foreach (var i in inttree.ToList()) 
-          Console.WriteLine(i);
-        foreach (var i in inttree.ToList(inttree.Postorder())) 
-          Console.WriteLine(i);
-        foreach (var i in inttree.ToList(inttree.Inorder())) 
-          Console.WriteLine(i);
-    
-        var floattree = new BinaryTree<float>(3.14f); 
-        floattree.Insert(0.99f, 2.34f, 3.1415f);
-        foreach (var f in floattree.ToList()) 
-          Console.WriteLine(f);
-    
-        var lannisters = new BinaryTree<string>("Tywin");
-        lannisters.Insert("Cersei","Tyrion","Joffrey");
-        lannisters.Insert("Tommen");
-        lannisters.Insert("Myrcella");
-        lannisters.Insert("Jamie");
-        foreach (var s in lannisters.ToList()) 
-          Console.WriteLine(s);
-        foreach (var s in lannisters.ToList(lannisters.Postorder()))
-          Console.WriteLine(s);
-    
-      }
-    }
-
-    mcs demo/treetest1.cs src/binarytree.cs src/binarytreelistextensions.cs 
-    mono demo/treetest1.exe
-
-    1
-    2
-    3
-    4
-    5
-    6
-    7
-    7
-    6
-    5
-    4
-    3
-    2
-    1
-    5
-    7
-    6
-    3
-    4
-    1
-    2
-    0,99
-    2,34
-    3,14
-    3,1415
-    Cersei
-    Jamie
-    Joffrey
-    Myrcella
-    Tommen
-    Tyrion
-    Tywin
-    Tywin
-    Tyrion
-    Tommen
-    Myrcella
-    Joffrey
-    Jamie
-    Cersei
-
-# Graphviz-Output<a id="orgheadline8"></a>
-
-## Extension<a id="orgheadline5"></a>
+# Graphviz Extension<a id="orgheadline3"></a>
 
     using System; 
     
@@ -245,7 +155,63 @@ A simple generic unbalanced binary tree.
       }
     }
 
-## Example<a id="orgheadline6"></a>
+# Demo<a id="orgheadline7"></a>
+
+## Insert and Traversion<a id="orgheadline4"></a>
+
+    using System; 
+    
+    class TreeTest {
+    
+      public static void Main()
+      {
+        var inttree = new BinaryTree<int>(5); 
+        inttree.Insert(3);
+        inttree.Insert(7);
+        inttree.Insert(1);
+        inttree.Insert(4);
+        inttree.Insert(6);
+        inttree.Insert(2);  
+        foreach (var i in inttree.ToList()) 
+          Console.Write(i + " ");
+        Console.WriteLine();
+        foreach (var i in inttree.ToList(inttree.Postorder())) 
+          Console.Write(i + " ");
+        Console.WriteLine();
+        foreach (var i in inttree.ToList(inttree.Inorder())) 
+          Console.Write(i + " ");
+    
+        Console.WriteLine();
+        var floattree = new BinaryTree<float>(3.14f); 
+        floattree.Insert(0.99f, 2.34f, 3.1415f);
+        foreach (var f in floattree.ToList()) 
+          Console.Write(f + " ");
+    
+        var lannisters = new BinaryTree<string>("Tywin");
+        lannisters.Insert("Cersei","Tyrion","Joffrey");
+        lannisters.Insert("Tommen");
+        lannisters.Insert("Myrcella");
+        lannisters.Insert("Jamie");
+        Console.WriteLine();
+        foreach (var s in lannisters.ToList()) 
+          Console.Write(s + " ");
+        Console.WriteLine();
+        foreach (var s in lannisters.ToList(lannisters.Postorder()))
+          Console.Write(s + " ");
+      }
+    }
+
+    mcs demo/treetest1.cs src/binarytree.cs src/binarytreelistextensions.cs 
+    mono demo/treetest1.exe
+
+    1 2 3 4 5 6 7 
+    7 6 5 4 3 2 1 
+    5 7 6 3 4 1 2 
+    0,99 2,34 3,14 3,1415 
+    Cersei Jamie Joffrey Myrcella Tommen Tyrion Tywin 
+    Tywin Tyrion Tommen Myrcella Joffrey Jamie Cersei
+
+## Draw Tree<a id="orgheadline5"></a>
 
 Call extension method `PrintDot` and feed the results into [Graphviz](http://www.graphviz.org/): 
 
@@ -262,7 +228,7 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
 
 ![img](images/tree1.png)
 
-## Another Example<a id="orgheadline7"></a>
+## Draw another Tree<a id="orgheadline6"></a>
 
     using System; 
     
@@ -285,7 +251,7 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
 
 ![img](images/tree2.png)
 
-# Application: Huffman-Encoding<a id="orgheadline9"></a>
+# Application: Huffman-Encoding<a id="orgheadline8"></a>
 
     using System;
     using System.Collections.Generic; 
@@ -296,10 +262,11 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
     class PriorityQueue<T> { // A poor man's priority queue... 
     
       List<T> list;
-      readonly Func<T, T, int> comparer; 
+      public delegate int CompareDelegate(T v1, T v2); 
+      CompareDelegate compare;
     
-      public PriorityQueue(Func<T, T, int> comparer) {
-        this.comparer = comparer;
+      public PriorityQueue(CompareDelegate compare) {
+        this.compare = compare;
         list = new List<T>();
       }
     
@@ -311,7 +278,7 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
     
       public void Enqueue(T element) { 
         list.Add(element);
-        list.Sort((x,y) => -1*comparer(x,y)); // reverse sort order such that smallest element is at end of list
+        list.Sort((x,y) => -1*compare(x,y)); // reverse sort order such that smallest element is at end of list
       } 
     
       public int Count {
@@ -339,13 +306,12 @@ Call extension method `PrintDot` and feed the results into [Graphviz](http://www
         Func<StringIntPair, StringIntPair, int> comparer = (x,y) => x.Value - y.Value; 
         var PQ = new PriorityQueue<BinaryTree<StringIntPair>>((x,y) => comparer(x.value, y.value));
         foreach(var element in hist.dict) {
-          PQ.Enqueue(new BinaryTree<StringIntPair>(new StringIntPair(((char)element.Key).ToString(),element.Value), comparer));
+          PQ.Enqueue(new BinaryTree<StringIntPair>(new StringIntPair(((char)element.Key).ToString(),element.Value), (x,y) => comparer(x,y)));
         }
-    
         while (PQ.Count > 1) {
           var T1 = PQ.Dequeue();
           var T2 = PQ.Dequeue();
-          var newRoot = new BinaryTree<StringIntPair>(new StringIntPair(T1.value.Key + T2.value.Key, T1.value.Value+T2.value.Value), comparer);
+          var newRoot = new BinaryTree<StringIntPair>(new StringIntPair(T1.value.Key + T2.value.Key, T1.value.Value+T2.value.Value), (x,y) => comparer(x,y));
           newRoot.left = T1;
           newRoot.right= T2;
           PQ.Enqueue(newRoot);

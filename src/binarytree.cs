@@ -7,25 +7,27 @@ using System.Collections.Generic;
     public BinaryTree<T> right;
 
     public readonly T value;
-    Func<T, T, int> comparer; 
+    public delegate int CompareDelegate(T v1, T v2); 
+    CompareDelegate compare = Comparer<T>.Default.Compare;
 
-    public BinaryTree(T value, Func<T, T, int> comparer) {
+    public BinaryTree(T value) {
       this.value = value;
-      this.comparer = comparer;
       left = null;
       right = null;
     }
 
-    public BinaryTree(T value) : this(value, (x,y) => Comparer<T>.Default.Compare(x,y)) { }
+    public BinaryTree(T value, CompareDelegate compare) : this(value) {
+      this.compare = compare; 
+    }
 
     public void Insert(T value) {
-      if (comparer(value, this.value) < 0)
+      if (compare(value, this.value) < 0)
       {
-        if (left == null) left = new BinaryTree<T>(value, comparer);
+        if (left == null) left = new BinaryTree<T>(value, compare);
         else left.Insert(value);
       }
       else  if (right == null)
-        right = new BinaryTree<T>(value, comparer);
+        right = new BinaryTree<T>(value, compare);
       else right.Insert(value);
     }
 

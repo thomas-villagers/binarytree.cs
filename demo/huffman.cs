@@ -7,10 +7,11 @@ using StringIntPair = System.Collections.Generic.KeyValuePair<string,int>;
 class PriorityQueue<T> { // A poor man's priority queue... 
 
   List<T> list;
-  readonly Func<T, T, int> comparer; 
+  public delegate int CompareDelegate(T v1, T v2); 
+  CompareDelegate compare;
 
-  public PriorityQueue(Func<T, T, int> comparer) {
-    this.comparer = comparer;
+  public PriorityQueue(CompareDelegate compare) {
+    this.compare = compare;
     list = new List<T>();
   }
 
@@ -22,7 +23,7 @@ class PriorityQueue<T> { // A poor man's priority queue...
 
   public void Enqueue(T element) { 
     list.Add(element);
-    list.Sort((x,y) => -1*comparer(x,y)); // reverse sort order such that smallest element is at end of list
+    list.Sort((x,y) => -1*compare(x,y)); // reverse sort order such that smallest element is at end of list
   } 
 
   public int Count {
@@ -50,13 +51,12 @@ class Huffman {
     Func<StringIntPair, StringIntPair, int> comparer = (x,y) => x.Value - y.Value; 
     var PQ = new PriorityQueue<BinaryTree<StringIntPair>>((x,y) => comparer(x.value, y.value));
     foreach(var element in hist.dict) {
-      PQ.Enqueue(new BinaryTree<StringIntPair>(new StringIntPair(((char)element.Key).ToString(),element.Value), comparer));
+      PQ.Enqueue(new BinaryTree<StringIntPair>(new StringIntPair(((char)element.Key).ToString(),element.Value), (x,y) => comparer(x,y)));
     }
-  
     while (PQ.Count > 1) {
       var T1 = PQ.Dequeue();
       var T2 = PQ.Dequeue();
-      var newRoot = new BinaryTree<StringIntPair>(new StringIntPair(T1.value.Key + T2.value.Key, T1.value.Value+T2.value.Value), comparer);
+      var newRoot = new BinaryTree<StringIntPair>(new StringIntPair(T1.value.Key + T2.value.Key, T1.value.Value+T2.value.Value), (x,y) => comparer(x,y));
       newRoot.left = T1;
       newRoot.right= T2;
       PQ.Enqueue(newRoot);

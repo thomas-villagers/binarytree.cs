@@ -12,26 +12,30 @@ class TreeTest {
     inttree.Insert(6);
     inttree.Insert(2);  
     foreach (var i in inttree.ToList()) 
-      Console.WriteLine(i);
+      Console.Write(i + " ");
+    Console.WriteLine();
     foreach (var i in inttree.ToList(inttree.Postorder())) 
-      Console.WriteLine(i);
+      Console.Write(i + " ");
+    Console.WriteLine();
     foreach (var i in inttree.ToList(inttree.Inorder())) 
-      Console.WriteLine(i);
+      Console.Write(i + " ");
     
+    Console.WriteLine();
     var floattree = new BinaryTree<float>(3.14f); 
     floattree.Insert(0.99f, 2.34f, 3.1415f);
     foreach (var f in floattree.ToList()) 
-      Console.WriteLine(f);
+      Console.Write(f + " ");
 
     var lannisters = new BinaryTree<string>("Tywin");
     lannisters.Insert("Cersei","Tyrion","Joffrey");
     lannisters.Insert("Tommen");
     lannisters.Insert("Myrcella");
     lannisters.Insert("Jamie");
+    Console.WriteLine();
     foreach (var s in lannisters.ToList()) 
-      Console.WriteLine(s);
+      Console.Write(s + " ");
+    Console.WriteLine();
     foreach (var s in lannisters.ToList(lannisters.Postorder()))
-      Console.WriteLine(s);
-
+      Console.Write(s + " ");
   }
 }
