@@ -19,8 +19,8 @@ static class BinaryTreeListExtensions {
 
   private static void TraverseInorder<T>(BinaryTree<T> tree, List<T> list) {
     list.Add(tree.value);
-    if (tree.right != null) TraverseInorder(tree.right, list); 
     if (tree.left != null) TraverseInorder(tree.left, list);
+    if (tree.right != null) TraverseInorder(tree.right, list); 
   }
 
   public static TraversalDelegate<T> Postorder<T>(this BinaryTree<T> tree) {  // is there a better way to do this? 
@@ -44,5 +44,4 @@ static class BinaryTreeListExtensions {
   public static List<T> ToList<T>(this BinaryTree<T> tree) {
     return tree.ToList<T>(TraversePreorder<T>);
   }
-
 }
